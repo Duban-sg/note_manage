@@ -1,0 +1,17 @@
+# 
+FROM python:3.9
+
+# 
+WORKDIR /services/apis/back_end_notes
+
+# 
+COPY ./requirements.txt /services/apis/back_end_notes/requirements.txt
+
+# 
+RUN pip install --no-cache-dir --upgrade -r /services/apis/back_end_notes/requirements.txt
+
+# 
+COPY . /services/apis/back_end_notes
+
+# 
+CMD ["uvicorn", "src.main:app", "--reload","--host", "0.0.0.0", "--port", "80"]
