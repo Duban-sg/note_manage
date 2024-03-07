@@ -1,16 +1,22 @@
 version:  "1"
 
-
 services:
-  microservice:
-    build: ./back-end/
-
+  frontend:
+    build: ./front-end/
     ports:
-      - "8080:80"
-    environment:
-      - password_data_base=4eLNFkI9TFCLgYzP
-      - user_data_base=dubancsierra
-      - server_data_base=cluster0.lgeb6sa.mongodb.net
-      - appname_data_base=Cluster0
+      - "3001:3000"
     volumes:
-      - ./back-end/:/services/apis/back_end_notes
+      - ./back-end/:/services/apis/back_end_notes   # Esto solo es para temas de desarrollo
+      
+  # microservice:
+  #   build: ./back-end/
+
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     - password_data_base=4eLNFkI9TFCLgYzP
+  #     - user_data_base=dubancsierra
+  #     - server_data_base=cluster0.hejnt7r.mongodb.net
+  #     - appname_data_base=Cluster0
+  #   volumes:
+  #     - ./back-end/:/services/apis/back_end_notes  # Esto solo es para temas de desarrollo

@@ -1,0 +1,14 @@
+FROM node:18-alpine
+
+WORKDIR /public/wwww/note-dock
+
+COPY public/ /public/wwww/note-dock/public/
+COPY src/ /public/wwww/note-dock/src/
+COPY package.json /public/wwww/note-dock/package.json
+COPY package-lock.json /code/package-lock.json
+
+
+RUN npm i 
+
+CMD [ "npm","start" ]
+
