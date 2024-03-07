@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Union
 
 class Note(BaseModel):
-    id : Union[str, None] = None
+    _id : Union[str, None] = None
     fecha_creacion : Union[str, None] = None
     title: Union[str, None] = None
     content: Union[str, None] = None

@@ -8,8 +8,6 @@ class mongo_db:
     server:   str
     appname: str
     stringConecction: str
-    ##baseDeDatos  = MongoClient ('mongodb+srv://dubancsierra:<password>@cluster0.lgeb6sa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-
 
     def __init__(self) -> None:
         self.usuario = get_var("user_data_base")
@@ -18,6 +16,25 @@ class mongo_db:
         self.appname = get_var("appname_data_base")
         stringConecction = 'mongodb+srv://'+self.usuario+':'+self.password+'@'+self.server+'/?retryWrites=true&w=majority&appName='+self.appname
         self.database = MongoClient(stringConecction)
+
+    def insertInColeccition(self,nameDatabase,nameCollection,document):
+        db = self.database[nameDatabase]
+        collection = db[nameCollection]
+        result = collection.insert_one(document)
+        return result
+    
+    def getAllDocumentInCollection(self,nameDatabase,nameCollection,filter=None):
+        db = self.database[nameDatabase]
+        collection = db[nameCollection] 
+        if (filter != None ):
+            allDocuments = collection.find({},filter)
+        else: 
+            allDocuments = collection.find()
+        return allDocuments
+            
+
+
+
 
 
 
