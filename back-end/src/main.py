@@ -38,9 +38,9 @@ def read_item(idnote: str,noteIn:NoteIn.NoteIn) :
         raise HTTPException(status_code=404, detail="Note Not found")
 
     
-@app.delete("/notas/{idnote}",Note.note)
-def delete_note(idNote: str): 
-    result = basededatos.deleteDocumentByIdInCollecction(idNote)
+@app.delete("/notas/{idnote}")
+def delete_note(idnote: str): 
+    result = basededatos.deleteDocumentByIdInCollecction(idnote)
     if result :
         return idNote
     else :
