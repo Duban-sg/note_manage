@@ -13,14 +13,14 @@ async function getNotes() {
     }
 }
 
-async function postNotes(title, body){
+async function postNotes(title, content){
     try{
         const response = await fetch(settings.IP_API_URL+'notas', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title, body })
+            body: JSON.stringify({ title, content })
           });
     
           if (!response.ok) {

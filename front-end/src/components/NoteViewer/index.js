@@ -5,11 +5,6 @@ function NoteViewer({ note, onSaveNote }) {
     const [editing, setEditing] = React.useState(false);
     const [editedNote, setEditedNote] = React.useState({ ...note });
 
-    // React.useEffect(() => {
-    //     setEditedNote({ ...note }); // Reinicializar la nota editada cuando se cambia la nota
-    //     setEditing(false); // Desactivar el modo de edición al cambiar la nota
-    // }, [note]);
-
     const handleEdit = () => {
         setEditing(true);
     };
