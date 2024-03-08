@@ -1,0 +1,31 @@
+/* .note-list {
+    background-color: #f0f0f0;
+    padding: 20px;
+} */
+
+.note-list {
+    margin: 20px; /* Margen exterior */
+  }
+  
+  .note-list h2 {
+    font-size: 1.5rem; /* Tamaño de fuente del título */
+    margin-bottom: 10px; /* Margen inferior del título */
+  }
+  
+  .note-list ul {
+    list-style-type: none; /* Quita los puntos de la lista */
+    padding: 0; /* Elimina el relleno de la lista */
+  }
+  
+  .note-list li {
+    background-color: #f0f0f0; /* Color de fondo */
+    border-radius: 5px; /* Borde redondeado */
+    padding: 10px; /* Relleno interior */
+    margin-bottom: 10px; /* Margen inferior */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+  }
+  
+  .note-list li:hover {
+    background-color: #e0e0e0; /* Color de fondo al pasar por encima */
+  }
+  

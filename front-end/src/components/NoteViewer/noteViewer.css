@@ -1,0 +1,46 @@
+/* .note-viewer {
+    background-color: #e0e0e0;
+    padding: 20px;
+}
+   */
+.note-viewer {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.container {
+  text-align: start;
+  margin-top: 60px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.note-viewer h2  {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+textarea {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.note-viewer p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.input-title,
+.input-body {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem; /* Tamaño de fuente igual al de h2 */
+  margin-bottom: 10px; /* Margen inferior igual al de h2 */
+}
+
+.input-body {
+  font-size: 1rem; /* Tamaño de fuente igual al de p */
+  line-height: 1.5; /* Espaciado de línea igual al de p */
+}
