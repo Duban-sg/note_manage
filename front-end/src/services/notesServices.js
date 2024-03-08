@@ -1,8 +1,6 @@
 import settings from "../utils/settings";
 function getNotes() {
-    console.error(settings.IP_API_URL)
-    console.log(settings.DATABASE_HOST)
-    fetch(IP_API_URL+'notas')
+    fetch(settings.IP_API_URL+'notas')
         .then(response => response.json())
         .then(data => {
             return data;
