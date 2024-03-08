@@ -1,13 +1,6 @@
 version:  "1"
 
 services:
-  # frontend:
-  #   build: ./front-end/
-  #   ports:
-  #     - "3001:3000"
-  #   volumes:
-  #     - ./back-end/:/services/apis/back_end_notes   # Esto solo es para temas de desarrollo
-      
   microservice:
     build: ./back-end/
 
@@ -20,3 +13,21 @@ services:
       - appname_data_base=Cluster0
     volumes:
       - ./back-end/:/services/apis/back_end_notes  # Esto solo es para temas de desarrollo
+  frontend:
+    build:
+      context: ./front-end/
+      dockerfile: Dockerfile
+
+    volumes:
+      - './front-end/:/public/wwww/note-dock'
+      - './front-end/node_modules:/public/wwww/note-dock/node_modules'
+    ports:
+      - "3001:3000"
+    environment:
+      - 'URL_API_SERVER=http://127.0.0.1:80/'
+      - DATABASE_HOST=asdasdadasd
+    depends_on:
+      - microservice
+
+      
+
