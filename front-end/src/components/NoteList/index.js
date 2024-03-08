@@ -8,6 +8,7 @@ function NoteList ({ notes, onNoteSelect , onDeleteNote}) {
       const success = await deleteNote(noteId);
       if (success) {
         onDeleteNote(noteId);
+        window.location.reload();
       } else {
         console.error('Error: La eliminación de la nota no tuvo éxito');
       }
