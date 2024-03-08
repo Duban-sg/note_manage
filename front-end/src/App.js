@@ -15,10 +15,17 @@ function App() {
 
   const [notes, setNotes] = React.useState([]);
 
-  React.useEffect(() => {
-    // Realizar una solicitud GET al backend para obtener todas las notas
-    setNotes(getNotes());
-  }, []); 
+React.useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const notesData = await getNotes();
+      setNotes(notesData);
+    } catch (error) {
+      console.error('Error al obtener las notas:', error);
+    }
+  };
+  fetchData();
+}, []);
 
   const handleNoteSelect = (index) => {
     setSelectedNoteIndex(index);
