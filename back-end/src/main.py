@@ -17,22 +17,21 @@ basededatos.setNameCollection('notes')
 
 
 
-
-@app.post("/nota/", response_model= Note.Note)
-async def read_item( noteIn:NoteIn.NoteIn):
+@app.post("/notas/")
+async def saveNotes( noteIn:NoteIn.NoteIn):
     note = Note.Note(**noteIn.dict(), fecha_creacion = str(date.today()))
     resutl = basededatos.insertInColeccition(note.dict())
-    note._id = str(resutl.inserted_id)
-    return note
+    response = {**note.dict(), '_id':str(resutl.inserted_id)}
+    return response
 
 @app.get("/notas/")
-def read_item() :
+def getNotes() :
     resutl = basededatos.getAllDocumentInCollection()
     return resutl
 
 
-@app.put("/notas/{idnote}",response_model=Note.Note)
-def read_item(idnote: str,noteIn:NoteIn.NoteIn) :
+@app.put("/notas/{idnote}")
+def updateNotes(idnote: str,noteIn:NoteIn.NoteIn) :
     noteIn = jsonable_encoder(noteIn)
     resutl = basededatos.updateDocumentByIdInCollecction(idnote,noteIn)
     if resutl :

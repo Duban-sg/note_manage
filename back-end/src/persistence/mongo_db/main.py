@@ -60,7 +60,6 @@ class mongo_db:
         },{
             '$set': {**document,'fecha_modificacion':str(date.today())}
         })
-
         if response.modified_count > 0 :
             return True
         else:
