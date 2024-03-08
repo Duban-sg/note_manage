@@ -1,19 +1,21 @@
 import settings from "../utils/settings";
-function getNotes() {
-    fetch(settings.IP_API_URL+'notas')
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch(error => {
-            console.error('Error al obtener las notas:', error);
-            return [];
-        });
+async function getNotes() {
+    try {
+        const response = await fetch(settings.IP_API_URL + 'notas');
+        if (!response.ok) {
+            throw new Error('No se pudo obtener las notas. Código de estado: ' + response.status);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener las notas:', error);
+        throw error; // Propaga el error para que el consumidor pueda manejarlo
+    }
 }
 
-function postNotes(title, body){
+async function postNotes(title, body){
     try{
-        const response =  fetch(settings.IP_API_URL+'notas', {
+        const response = await fetch(settings.IP_API_URL+'notas', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -32,9 +34,9 @@ function postNotes(title, body){
     
 }
 
-function putNote(editedNote){
+async function putNote(editedNote){
     try {
-        const response = fetch(settings.IP_API_URL+`notas/${editedNote.id}`, {
+        const response = await fetch(settings.IP_API_URL+`notas/${editedNote.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -47,6 +49,7 @@ function putNote(editedNote){
         console.error('Error:', error);
     }
 }
+
 export async function deleteNote(noteId) {
     try {
         const response = await fetch(settings.IP_API_URL+`notas/${noteId}`, {

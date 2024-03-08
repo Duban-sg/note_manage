@@ -6,26 +6,22 @@ const AddNoteModal = ({ onAddNote }) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   onAddNote({ title, body });
-  //   setTitle('');
-  //   setBody('');
-
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = postNotes({ title, body });
-    if (!response.ok) {
-      throw new Error('Error al crear una nueva nota');
-    }else{
-      // Si la solicitud es exitosa, llamar a la función onAddNote para agregar la nueva nota al estado de la aplicación
-      onAddNote({ title, body });
-      // Limpiar los campos del formulario después de enviar la solicitud
-      setTitle('');
-      setBody('');
+    try {
+      const response = await postNotes(title, body);
+      if (!response.ok) {
+        throw new Error('Error al crear una nueva nota');
+      } else {
+        // Si la solicitud es exitosa, llamar a la función onAddNote para agregar la nueva nota al estado de la aplicación
+        onAddNote({ title, body });
+        // Limpiar los campos del formulario después de enviar la solicitud
+        setTitle('');
+        setBody('');
+      }
+    } catch (error) {
+      console.error('Error al enviar la solicitud de la nueva nota:', error);
     }
   };
   
