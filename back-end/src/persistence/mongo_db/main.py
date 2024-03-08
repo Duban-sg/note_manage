@@ -73,7 +73,7 @@ class mongo_db:
         '_id': ObjectId(id)
         })
 
-        if response.modified_count > 0 :
+        if response.deleted_count > 0 :
             return True
         else:
             return False

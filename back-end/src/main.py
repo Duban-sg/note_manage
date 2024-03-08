@@ -41,4 +41,11 @@ def updateNotes(idnote: str,noteIn:NoteIn.NoteIn) :
         raise HTTPException(status_code=404, detail="Note Not found")
 
     
-
+@app.delete("/notas/{idnote}")
+def delete_note(idnote: str): 
+    result = basededatos.deleteDocumentByIdInCollecction(idnote)
+    if result :
+        id = idnote
+        return id
+    else :
+        raise HTTPException(status_code=404, detail = "Note not found")
