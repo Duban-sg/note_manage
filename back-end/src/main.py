@@ -4,11 +4,17 @@ from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel
 from datetime import date
 import src.persistence.mongo_db.main as mongo_db
+from pydantic import json
+from bson import ObjectId
+from fastapi.encoders import jsonable_encoder
 
 
 app = FastAPI()
+json.ENCODERS_BY_TYPE[ObjectId]=str
 basededatos = mongo_db.mongo_db()
-basededatos.setNameCollection('note_manage','notes')
+basededatos.setNameDatabase('note_manage')
+basededatos.setNameCollection('notes')
+
 
 
 
@@ -16,21 +22,19 @@ basededatos.setNameCollection('note_manage','notes')
 async def read_item( noteIn:NoteIn.NoteIn):
     note = Note.Note(**noteIn.dict(), fecha_creacion = str(date.today()))
     resutl = basededatos.insertInColeccition(note.dict())
-    note.id = str(resutl.inserted_id)
+    note._id = str(resutl.inserted_id)
     return note
 
-@app.get("/notas/",response_model=List[Note.Note])
+@app.get("/notas/")
 def read_item() :
-    collectionResult = []
     resutl = basededatos.getAllDocumentInCollection()
-    for x in resutl:
-        collectionResult.append(Note.Note(**x))
-    return collectionResult
+    return resutl
 
 
-@app.put("/notas/{idnote}",Note.Note)
+@app.put("/notas/{idnote}",response_model=Note.Note)
 def read_item(idnote: str,noteIn:NoteIn.NoteIn) :
-    resutl = basededatos.getAllDocumentInCollection(idnote,noteIn.dick())
+    noteIn = jsonable_encoder(noteIn)
+    resutl = basededatos.updateDocumentByIdInCollecction(idnote,noteIn)
     if resutl :
         Note = basededatos.getOneDocumentInCollection(idnote)
         return Note

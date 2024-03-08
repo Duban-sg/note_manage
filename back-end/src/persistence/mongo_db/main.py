@@ -1,6 +1,7 @@
-from pymongo import MongoClient,ObjectId
+from pymongo import MongoClient
 from src.core.config import get_var
 from datetime import date
+from bson import ObjectId
 
 class mongo_db:
     database: MongoClient = None 
@@ -20,10 +21,10 @@ class mongo_db:
         stringConecction = 'mongodb+srv://'+self.usuario+':'+self.password+'@'+self.server+'/?retryWrites=true&w=majority&appName='+self.appname
         self.database = MongoClient(stringConecction)
 
-    def setNameCollection(self,nameDatabase):
-        self.nameCollection = nameDatabase
+    def setNameCollection(self,nameCollection):
+        self.nameCollection = nameCollection
     
-    def setNameCollection(self,nameDatabase):
+    def setNameDatabase(self,nameDatabase):
         self.nameDatabase = nameDatabase
 
     def insertInColeccition(self,document):
@@ -39,12 +40,14 @@ class mongo_db:
             allDocuments = collection.find({},filter)
         else: 
             allDocuments = collection.find()
+        allDocuments = list(map(lambda x: self.convertIdMongoInObjectToStr(x), allDocuments))
         return allDocuments
     
     def getOneDocumentInCollection(self,id):
         db = self.database[self.nameDatabase]
         collection = db[self.nameCollection]
         note = collection.find_one({"_id": ObjectId(id)})
+        note = self.convertIdMongoInObjectToStr(note)
         return note 
         
     
@@ -55,7 +58,7 @@ class mongo_db:
         response = collection.update_one({
             '_id': ObjectId(id)
         },{
-            '$set': {**document,'fecha_creacion':str(date.today())}
+            '$set': {**document,'fecha_modificacion':str(date.today())}
         })
 
         if response.modified_count > 0 :
@@ -66,7 +69,6 @@ class mongo_db:
     def deleteDocumentByIdInCollecction(self,id):
         db = self.database[self.nameDatabase]
         collection = db[self.nameCollection] 
-
         response = collection.delete_one(
         {
         '_id': ObjectId(id)
@@ -76,6 +78,12 @@ class mongo_db:
             return True
         else:
             return False
+        
+
+    def convertIdMongoInObjectToStr(self,item):
+        item['_id'] = str(item['_id'])
+        return item
+
         
 
         
