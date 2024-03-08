@@ -3,13 +3,18 @@ import './notelist.css';
 import { deleteNote } from '../../services/notesServices';
 function NoteList ({ notes, onNoteSelect , onDeleteNote}) {
 
-  const handleDeleteNote = async () => {
-    const success = await deleteNote(notes.id);
-    if (success) {
-        // Si la nota se eliminó correctamente, ejecutar la función proporcionada en onNoteDeleted
-        onDeleteNote(notes.id);
+  const handleDeleteNote = async (noteId) => {
+    try {
+      const success = await deleteNote(noteId);
+      if (success) {
+        onDeleteNote(noteId);
+      } else {
+        console.error('Error: La eliminación de la nota no tuvo éxito');
+      }
+    } catch (error) {
+      console.error('Error al eliminar la nota:', error);
     }
-};
+  };
     return (
       <div className="note-list">
         <h2>Notas</h2>
@@ -17,7 +22,7 @@ function NoteList ({ notes, onNoteSelect , onDeleteNote}) {
           {notes.map((note, index) => (
             <li key={index} onClick={() => onNoteSelect(index)}>
               {note.title}
-              <button onClick={handleDeleteNote}>x</button>
+              <button onClick={() => handleDeleteNote(note._id)}>x</button>
             </li>
           ))}
         </ul>

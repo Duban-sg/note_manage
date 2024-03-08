@@ -47,6 +47,9 @@ React.useEffect(() => {
     const updatedNotes = notes.filter(note => note.id !== noteId);
     // Actualizar el estado de la aplicación con las notas filtradas
     setNotes(updatedNotes);
+
+    
+    
   };
 
   return (
