@@ -12,7 +12,7 @@ services:
     build: ./back-end/
 
     ports:
-      - "8080:80"
+      - "8090:80"
     environment:
       - password_data_base=4eLNFkI9TFCLgYzP
       - user_data_base=dubancsierra

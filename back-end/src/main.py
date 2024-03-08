@@ -46,6 +46,7 @@ def read_item(idnote: str,noteIn:NoteIn.NoteIn) :
 def delete_note(idnote: str): 
     result = basededatos.deleteDocumentByIdInCollecction(idnote)
     if result :
-        return idNote
+        id = idnote
+        return id
     else :
         raise HTTPException(status_code=404, detail = "Note not found")
