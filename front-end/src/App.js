@@ -4,37 +4,26 @@ import { NoteList } from './components/NoteList';
 import { NoteViewer } from './components/NoteViewer';
 import { AddNoteModal } from './components/AddNoteModal';
 import { CreateNoteButton } from './components/CreateNoteButton';
+import { getNotes } from './services/notesServices';
 
 function App() {
   const [selectedNoteIndex, setSelectedNoteIndex] = React.useState(null);
   const [showAddNoteModal, setShowAddNoteModal] = React.useState(false);
   const [editingNote, setEditingNote] = React.useState(null);
 
-  const [notes, setNotes] = React.useState([
-    { title: 'Nota 1', body: 'Contenido de la nota 1' },
-    { title: 'Nota 2', body: 'Contenido de la nota 2' },
-    { title: 'Nota 3', body: 'Contenido de la nota 3' },
-  ]);
+  
 
-  // const [notes, setNotes] = React.useState([]);
+  const [notes, setNotes] = React.useState([]);
 
-  // React.useEffect(() => {
-  //   // Realizar una solicitud GET al backend para obtener todas las notas
-  //   fetch('/api/notes')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       setNotes(data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error al obtener las notas:', error);
-  //     });
-  // }, []); // Ejecutar solo una vez al montar el componente
+  React.useEffect(() => {
+    // Realizar una solicitud GET al backend para obtener todas las notas
+    setNotes(getNotes());
+  }, []); // Ejecutar solo una vez al montar el componente
 
 
 
   const handleNoteSelect = (index) => {
     setSelectedNoteIndex(index);
-    //setEditingNote(notes[index]); // Inicializar la nota en edición al seleccionarla
   };
 
   const handleAddNote = (newNote) => {
@@ -46,15 +35,19 @@ function App() {
     const updatedNotes = [...notes];
     updatedNotes[selectedNoteIndex] = editedNote;
     setNotes(updatedNotes);
-   // setEditingNote(null); // Limpiar la nota en edición después de guardar los cambios
   };
 
-
+  const handleDeleteNote = (noteId) => {
+    // Filtrar las notas para eliminar la nota con el ID correspondiente
+    const updatedNotes = notes.filter(note => note.id !== noteId);
+    // Actualizar el estado de la aplicación con las notas filtradas
+    setNotes(updatedNotes);
+  };
 
   return (
     <div className="app">
 
-      <NoteList notes={notes} onNoteSelect={handleNoteSelect} />
+      <NoteList notes={notes} onNoteSelect={handleNoteSelect} onDeleteNote={handleDeleteNote}/>
 
       {selectedNoteIndex !== null && (
         <NoteViewer 

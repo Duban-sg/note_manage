@@ -1,14 +1,14 @@
 import React from "react";
 import './noteViewer.css';
 
-function NoteViewer({ note, onEditNote, onSaveNote }) {
+function NoteViewer({ note, onSaveNote }) {
     const [editing, setEditing] = React.useState(false);
     const [editedNote, setEditedNote] = React.useState({ ...note });
 
-    React.useEffect(() => {
-        setEditedNote({ ...note }); // Reinicializar la nota editada cuando se cambia la nota
-        setEditing(false); // Desactivar el modo de edición al cambiar la nota
-    }, [note]);
+    // React.useEffect(() => {
+    //     setEditedNote({ ...note }); // Reinicializar la nota editada cuando se cambia la nota
+    //     setEditing(false); // Desactivar el modo de edición al cambiar la nota
+    // }, [note]);
 
     const handleEdit = () => {
         setEditing(true);
@@ -23,8 +23,28 @@ function NoteViewer({ note, onEditNote, onSaveNote }) {
 
     };
 
-    const handleSave = () => {
-        onSaveNote(editedNote);
+    const handleSave = async () => {
+        try {
+            const response = await fetch(`/api/notes/${editedNote.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(editedNote)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al guardar la nota');
+            }
+
+            // Llamar a la función onSaveNote para actualizar la nota en el estado de la aplicación
+            onSaveNote(editedNote);
+
+            // Desactivar el modo de edición
+            setEditing(false);
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
