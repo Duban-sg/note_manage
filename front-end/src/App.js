@@ -18,9 +18,7 @@ function App() {
   React.useEffect(() => {
     // Realizar una solicitud GET al backend para obtener todas las notas
     setNotes(getNotes());
-  }, []); // Ejecutar solo una vez al montar el componente
-
-
+  }, []); 
 
   const handleNoteSelect = (index) => {
     setSelectedNoteIndex(index);
