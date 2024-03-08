@@ -19,16 +19,15 @@ function NoteViewer({ note, onSaveNote }) {
     };
 
     const handleSave = async () => {
-
-        const response = putNote(editedNote);
-
-        if (!response.ok) {
-            throw new Error('Error al guardar la nota');
-        }else{
-            // Llamar a la función onSaveNote para actualizar la nota en el estado de la aplicación
+        try {
+            // Esperar a que la promesa se resuelva para obtener la respuesta real de la solicitud PUT
+            const response = await putNote(editedNote);
+            
             onSaveNote(editedNote);
-            // Desactivar el modo de edición
+                // Desactivar el modo de edición
             setEditing(false);
+        } catch (error) {
+            console.error('Error al guardar la nota:', error);
         }
     };
 

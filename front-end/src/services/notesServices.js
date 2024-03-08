@@ -36,13 +36,18 @@ async function postNotes(title, content){
 
 async function putNote(editedNote){
     try {
-        const response = await fetch(settings.IP_API_URL+`notas/${editedNote.id}`, {
+        console.log(editedNote._id);
+        const response = await fetch(settings.IP_API_URL+`notas/${editedNote._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(editedNote)
         });
+
+        if (!response.ok) {
+            throw new Error('Error al ACTUALIZAR la nota');
+          }
         return(response);
         
     } catch (error) {
