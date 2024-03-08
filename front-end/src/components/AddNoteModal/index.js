@@ -4,21 +4,21 @@ import { postNotes } from '../../services/notesServices';
 const AddNoteModal = ({ onAddNote }) => {
 
   const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [content, setContent] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await postNotes(title, body);
+      const response = await postNotes(title, content);
       if (!response.ok) {
         throw new Error('Error al crear una nueva nota');
       } else {
         // Si la solicitud es exitosa, llamar a la función onAddNote para agregar la nueva nota al estado de la aplicación
-        onAddNote({ title, body });
+        onAddNote({ title, content });
         // Limpiar los campos del formulario después de enviar la solicitud
         setTitle('');
-        setBody('');
+        setContent('');
       }
     } catch (error) {
       console.error('Error al enviar la solicitud de la nueva nota:', error);
@@ -38,8 +38,8 @@ const AddNoteModal = ({ onAddNote }) => {
         />
         <textarea
           placeholder="Cuerpo de la nota"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           required
         ></textarea>
 

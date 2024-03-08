@@ -50,8 +50,8 @@ function NoteViewer({ note, onSaveNote }) {
                             onChange={handleInputChange}
                         />
                         <textarea
-                            name="body"
-                            value={editedNote.body}
+                            name="content"
+                            value={editedNote.content}
                             onChange={handleInputChange}
                         ></textarea>
                         <button onClick={handleSave}>Guardar</button>
@@ -59,7 +59,7 @@ function NoteViewer({ note, onSaveNote }) {
                 ) : (
                     <>
                         <h2 onClick={handleEdit}>{note.title}</h2>
-                        <p onClick={handleEdit}>{note.body}</p>
+                        <p onClick={handleEdit}>{note.content}</p>
                     </>
                 )}
             </div>
