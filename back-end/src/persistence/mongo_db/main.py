@@ -1,4 +1,4 @@
-from pymongo import MongoClient,ObjectId
+from pymongo import MongoClient
 from src.core.config import get_var
 from datetime import date
 
@@ -20,10 +20,10 @@ class mongo_db:
         stringConecction = 'mongodb+srv://'+self.usuario+':'+self.password+'@'+self.server+'/?retryWrites=true&w=majority&appName='+self.appname
         self.database = MongoClient(stringConecction)
 
-    def setNameCollection(self,nameDatabase):
-        self.nameCollection = nameDatabase
+    def setNameCollection(self,nameCollection):
+        self.nameCollection = nameCollection
     
-    def setNameCollection(self,nameDatabase):
+    def setNameDatabase(self,nameDatabase):
         self.nameDatabase = nameDatabase
 
     def insertInColeccition(self,document):

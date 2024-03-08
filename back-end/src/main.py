@@ -8,7 +8,9 @@ import src.persistence.mongo_db.main as mongo_db
 
 app = FastAPI()
 basededatos = mongo_db.mongo_db()
-basededatos.setNameCollection('note_manage','notes')
+basededatos.setNameDatabase('note_manage')
+basededatos.setNameCollection('notes')
+
 
 
 
@@ -28,7 +30,7 @@ def read_item() :
     return collectionResult
 
 
-@app.put("/notas/{idnote}",Note.Note)
+@app.put("/notas/{idnote}",response_model=Note.Note)
 def read_item(idnote: str,noteIn:NoteIn.NoteIn) :
     resutl = basededatos.getAllDocumentInCollection(idnote,noteIn.dick())
     if resutl :
