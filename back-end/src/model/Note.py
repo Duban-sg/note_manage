@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Union
 
+
 class Note(BaseModel):
     _id : Union[str, None] = None
     fecha_creacion : Union[str, None] = None
@@ -13,7 +14,6 @@ class Note(BaseModel):
     #     self.fecha_creacion = date.today()
     #     self.title = title
     #     self.content = content
-        
 
 
 
