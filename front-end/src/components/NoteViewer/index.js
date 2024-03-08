@@ -1,6 +1,6 @@
 import React from "react";
 import './noteViewer.css';
-
+import { putNote } from "../../services/notesServices";
 function NoteViewer({ note, onSaveNote }) {
     const [editing, setEditing] = React.useState(false);
     const [editedNote, setEditedNote] = React.useState({ ...note });
@@ -24,26 +24,16 @@ function NoteViewer({ note, onSaveNote }) {
     };
 
     const handleSave = async () => {
-        try {
-            const response = await fetch(`/api/notes/${editedNote.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(editedNote)
-            });
 
-            if (!response.ok) {
-                throw new Error('Error al guardar la nota');
-            }
+        const response = putNote(editedNote);
 
+        if (!response.ok) {
+            throw new Error('Error al guardar la nota');
+        }else{
             // Llamar a la función onSaveNote para actualizar la nota en el estado de la aplicación
             onSaveNote(editedNote);
-
             // Desactivar el modo de edición
             setEditing(false);
-        } catch (error) {
-            console.error('Error:', error);
         }
     };
 

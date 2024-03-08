@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AddNoteModal.css';
+import { postNotes } from '../../services/notesServices';
 const AddNoteModal = ({ onAddNote }) => {
 
   const [title, setTitle] = useState('');
@@ -16,28 +17,15 @@ const AddNoteModal = ({ onAddNote }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      // Realizar una solicitud POST al backend para crear una nueva nota
-      const response = await fetch('/api/notes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ title, body })
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al crear una nueva nota');
-      }
-
+    const response = postNotes({ title, body });
+    if (!response.ok) {
+      throw new Error('Error al crear una nueva nota');
+    }else{
       // Si la solicitud es exitosa, llamar a la función onAddNote para agregar la nueva nota al estado de la aplicación
       onAddNote({ title, body });
-
       // Limpiar los campos del formulario después de enviar la solicitud
       setTitle('');
       setBody('');
-    } catch (error) {
-      console.error('Error:', error);
     }
   };
   
