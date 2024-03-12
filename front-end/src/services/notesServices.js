@@ -1,7 +1,8 @@
 import settings from "../utils/settings";
 async function getNotes() {
     try {
-        const response = await fetch(settings.IP_API_URL + 'notas');
+        console.log(settings.REACT_APP_URL_API_SERVER )
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER + 'notas');
         if (!response.ok) {
             throw new Error('No se pudo obtener las notas. Código de estado: ' + response.status);
         }
@@ -15,7 +16,7 @@ async function getNotes() {
 
 async function postNotes(title, content){
     try{
-        const response = await fetch(settings.IP_API_URL+'notas', {
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER+'notas', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -37,7 +38,7 @@ async function postNotes(title, content){
 async function putNote(editedNote){
     try {
         console.log(editedNote._id);
-        const response = await fetch(settings.IP_API_URL+`notas/${editedNote._id}`, {
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER+`notas/${editedNote._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -57,7 +58,7 @@ async function putNote(editedNote){
 
 export async function deleteNote(noteId) {
     try {
-        const response = await fetch(settings.IP_API_URL+`notas/${noteId}`, {
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER+`notas/${noteId}`, {
             method: 'DELETE'
         });
 

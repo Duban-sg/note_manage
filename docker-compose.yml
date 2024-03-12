@@ -3,25 +3,48 @@ version:  "1"
 services:
   microservice:
     build: ./back-end/
-
     ports:
       - "8080:80"
+    container_name: back_end_notes
     environment:
       - password_data_base=4eLNFkI9TFCLgYzP
       - user_data_base=dubancsierra
-      - server_data_base=cluster0.hejnt7r.mongodb.net
-      - appname_data_base=Cluster0
-    volumes:
-      - ./back-end/:/services/apis/back_end_notes  # Esto solo es para temas de desarrollo
+      - server_ip_data_base=mongodb
+      - appname_data_base=test
+      - server_port_data_base=27017
+    networks:
+      - public
+      - private_tunel
+    depends_on:
+      - mongo
+    hostname: back_end_notes
   frontend:
-    build: ./front-end/
+    build: 
+      context: ./front-end/
+      args:
+        - REACT_APP_URL_API_SERVER=http://localhost:8080/
+        - REACT_APP_API_KEY=asdasdadasd  
     ports:
-      - "3001:3000"
-    environment:
-      - 'URL_API_SERVER=http://127.0.0.1:80/'
-      - DATABASE_HOST=asdasdadasd
+      - "3001:80"
+    networks:
+      - public
     depends_on:
       - microservice
-
-      
+  mongo:
+    restart: always
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dubancsierra
+      - MONGO_INITDB_ROOT_PASSWORD=4eLNFkI9TFCLgYzP
+      - MONGO_INITDB_DATABASE=Cluster0
+    volumes:
+      - ./mongo_data/:/data/db
+    networks:
+      - private_tunel
+    ports:
+      - 27017:27017
+networks:
+  public:
+  private_tunel:
 

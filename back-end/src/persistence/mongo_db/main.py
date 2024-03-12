@@ -8,6 +8,7 @@ class mongo_db:
     usuario : str
     password: str
     server:   str
+    port: str
     appname: str
     stringConecction: str
     nameDatabase:str
@@ -16,10 +17,11 @@ class mongo_db:
     def __init__(self) -> None:
         self.usuario = get_var("user_data_base")
         self.password = get_var("password_data_base")
-        self.server = get_var("server_data_base")
+        self.server = get_var("server_ip_data_base")
+        self.port = get_var("server_port_data_base")
         self.appname = get_var("appname_data_base")
-        stringConecction = 'mongodb+srv://'+self.usuario+':'+self.password+'@'+self.server+'/?retryWrites=true&w=majority&appName='+self.appname
-        self.database = MongoClient(stringConecction)
+        self.stringConecction = "mongodb://"+self.usuario+":"+self.password+"@"+self.server+":"+self.port +"/"+self.appname+"?directConnection=true&authSource=admin&appName=mongosh+2.1.5"
+        self.database = MongoClient (self.stringConecction)
 
     def setNameCollection(self,nameCollection):
         self.nameCollection = nameCollection
