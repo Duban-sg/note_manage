@@ -18,9 +18,8 @@ services:
       - mongo
     hostname: back_end_notes
   frontend:
-    image: 
-      nsme: note_manage-frontend
-      args:
+    image: note_manage-frontend
+    args:
         - REACT_APP_URL_API_SERVER=http://localhost:8080/
         - REACT_APP_API_KEY=asdasdadasd  
     ports:
