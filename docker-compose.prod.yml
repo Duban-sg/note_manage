@@ -1,0 +1,48 @@
+version:  "3.7"
+
+services:
+  microservice:
+    image: note_manage-frontend
+    ports:
+      - "8080:80"
+    environment:
+      - password_data_base=4eLNFkI9TFCLgYzP
+      - user_data_base=dubancsierra
+      - server_ip_data_base=mongodb
+      - appname_data_base=test
+      - server_port_data_base=27017
+    networks:
+      - public
+      - private_tunel
+    depends_on:
+      - mongo
+    hostname: back_end_notes
+  frontend:
+    image: 
+      nsme: note_manage-frontend
+      args:
+        - REACT_APP_URL_API_SERVER=http://localhost:8080/
+        - REACT_APP_API_KEY=asdasdadasd  
+    ports:
+      - "3001:80"
+    networks:
+      - public
+    depends_on:
+      - microservice
+  mongo:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dubancsierra
+      - MONGO_INITDB_ROOT_PASSWORD=4eLNFkI9TFCLgYzP
+      - MONGO_INITDB_DATABASE=Cluster0
+    volumes:
+      - ./mongo_data/:/data/db
+    networks:
+      - private_tunel
+    ports:
+      - 27017:27017
+networks:
+  public:
+  private_tunel:
+
