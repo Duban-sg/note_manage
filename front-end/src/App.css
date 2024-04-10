@@ -1,6 +1,6 @@
 .app {
   display: grid;
-  grid-template-columns: 0.5fr 2fr; /* 1fr para la columna de la lista de notas, 2fr para la columna de la nota seleccionada */
+  grid-template-columns:0.8fr 1fr 2fr ; /* 1fr para la columna de la lista de notas, 2fr para la columna de la nota seleccionada */
   gap: 10px; /* Espacio entre las columnas */
   height: 100vh;
 }

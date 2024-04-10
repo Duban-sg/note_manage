@@ -12,6 +12,7 @@ COPY public/ /public/wwww/note-dock/public/
 COPY src/ /public/wwww/note-dock/src/
 
 RUN npm install
+RUN npm install bootstrap
 
 ARG REACT_APP_URL_API_SERVER 
 ENV REACT_APP_URL_API_SERVER $REACT_APP_URL_API_SERVER

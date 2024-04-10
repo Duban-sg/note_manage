@@ -1,0 +1,35 @@
+.category {
+    background-color: black;
+    color: rgba(232, 218, 218, 0.722);;
+  }
+  
+  .category h3 {
+    color: white; /* Opcional: si deseas que el título también sea blanco */
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos a lo largo del contenedor */
+    align-items: center; /* Alinea los elementos verticalmente */
+  }
+  
+  
+  .category ul {
+    list-style: none; /* Quita los puntos de la lista */
+  }
+  
+  
+  .category li {
+    cursor: pointer; /* Cambia el cursor al pasar sobre los elementos de la lista */
+    display: flex; /* Hace que los elementos de lista sean flexibles */
+    justify-content: space-between; /* Distribuye los elementos a lo largo del contenedor */
+    align-items: center; /* Alinea los elementos verticalmente */
+    padding: 10px; /* Añade un espacio de relleno para mayor claridad */
+  }
+  
+  .category li:hover {
+    background-color: #333; /* Cambia el color de fondo al pasar el cursor sobre los elementos de la lista */
+  }
+
+  .category.active {
+    background-color: white;
+    color: white; /* Cambia el  de texto a negro cuando la categoría está activa */
+  }
+  

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import './AddNoteModal.css';
+import './AddNotes.css';
 import { postNotes } from '../../services/notesServices';
-const AddNoteModal = ({ onAddNote }) => {
+
+function AddNotes  ({ onAddNote }) {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -14,9 +15,7 @@ const AddNoteModal = ({ onAddNote }) => {
       if (!response.ok) {
         throw new Error('Error al crear una nueva nota');
       } else {
-        // Si la solicitud es exitosa, llamar a la función onAddNote para agregar la nueva nota al estado de la aplicación
         onAddNote({ title, content });
-        // Limpiar los campos del formulario después de enviar la solicitud
         setTitle('');
         setContent('');
       }
@@ -51,4 +50,4 @@ const AddNoteModal = ({ onAddNote }) => {
   );
 };
 
-export { AddNoteModal };
+export { AddNotes };
