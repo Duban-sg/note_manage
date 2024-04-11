@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
+import {Modal, Button } from 'react-bootstrap';
+import { useState } from 'react';
+function CategoryForm({ onAddCategory, onShowForm }) {
 
-function CategoryForm({ onAddCategory }) {
-  const [categoryName, setCategoryName] = React.useState('');
+  const [categoryName, setCategoryName] = React.useState("");
 
   const handleChange = (event) => {
     setCategoryName(event.target.value);
@@ -10,25 +12,43 @@ function CategoryForm({ onAddCategory }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     onAddCategory(categoryName);
-    setCategoryName('');
+    setCategoryName("");
+    onShowForm(false);
   };
 
+  const handleClose = () => onShowForm(false);
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="categoryName" className="form-label">Nombre de la categoría:</label>
-        <input 
-          type="text" 
-          className="form-control" 
-          id="categoryName" 
-          value={categoryName} 
-          onChange={handleChange} 
-          required 
+    <>
+      <Modal
+        show={onShowForm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Nueva Categoria</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <input
+          type="text"
+          className="form-control"
+          id="categoryName"
+          value={categoryName}
+          onChange={handleChange}
+          placeholder="Nombre de la Categoria"
+          required
         />
-      </div>
-      <button type="submit" className="btn btn-primary">Agregar Categoría</button>
-    </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>Add Categoria</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 
-export {CategoryForm};
+export { CategoryForm };

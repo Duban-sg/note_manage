@@ -19,6 +19,7 @@ function NoteList(props) {
   };
   return (
     <div className="note-list">
+      
       <h2>Notas</h2>
       <ul>
         {props.list.map((note, index) => (

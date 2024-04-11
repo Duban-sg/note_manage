@@ -1,17 +1,16 @@
-import React from 'react';
-import '../App.css';
-import { Category } from '../components/Category';
-import { NoteList } from '../components/NoteList';
-import { NoteViewer } from '../components/NoteViewer';
-import { AddNotes } from '../components/AddNote';
-import { CreateNoteButton } from '../components/CreateNoteButton';
-import { useNotes } from './useNotes';
-import { CategoryForm } from '../components/Category/CategoryForm';
-import { useCategory } from './useCategory';
-import { Notesearch } from '../components/NoteSearch';
-import { TodoList } from '../components/TodoList';
+import React from "react";
+import "../App.css";
+import { Category } from "../components/Category";
+import { NoteList } from "../components/NoteList";
+import { NoteViewer } from "../components/NoteViewer";
+import { AddNotes } from "../components/AddNote";
+import { CreateNoteButton } from "../components/CreateNoteButton";
+import { useNotes } from "./useNotes";
+import { CategoryForm } from "../components/Category/CategoryForm";
+import { useCategory } from "./useCategory";
+import { Notesearch } from "../components/NoteSearch";
+import { TodoList } from "../components/TodoList";
 function App() {
-
   const {
     AddNote,
     SaveNote,
@@ -22,7 +21,7 @@ function App() {
     NoteSelect,
     editingNote,
     selectedNoteIndex,
-    SetselectedNoteIndex
+    SetselectedNoteIndex,
   } = useNotes();
 
   const {
@@ -40,34 +39,45 @@ function App() {
     searchedNotes,
   } = useCategory();
 
-  
-
   return (
     <div className="app">
-      <Category categories={categories} onSelectCategory={handleSelectCategory} onShowForm={setShowForm} />
+      <Category
+        categories={categories}
+        onSelectCategory={handleSelectCategory}
+        onShowForm={setShowForm}
+      />
 
-      <div>
-          {showForm && <CategoryForm onAddCategory={handleAddCategory} />} 
-            <Notesearch 
-                searchValue= {searchValue}
-                setSearchValue = {setSearchValue}
-              />
-          <ul>
-            {categories.map((category, index) => (
-              selectedCategory === index &&
-              
+      <div className="note-list">
+        <div className="row">
+          <h3>
+            DevOps
+            <span className="badge bg-primary rounded-pill" onClick={AddNote}>
+              +
+            </span>
+            {/* Botón para mostrar u ocultar el formulario */}
+          </h3>
+          <h6>N Notas</h6>
+        </div>
+
+        {showForm && <CategoryForm onAddCategory={handleAddCategory} onShowForm={setShowForm} />}
+        <Notesearch searchValue={searchValue} setSearchValue={setSearchValue} />
+
+        <ul>
+          {categories.map(
+            (category, index) =>
+              selectedCategory === index && (
                 <NoteList
                   key={index}
                   list={category.lists}
                   onNoteSelect={handleSelectNote}
                   onDeleteNote={DeleteNote}
-                  searchedNotes = {searchedNotes}
-                  seachText = {searchValue}
+                  searchedNotes={searchedNotes}
+                  seachText={searchValue}
                 />
-              
-            ))}
-          </ul>
-        </div>
+              )
+          )}
+        </ul>
+      </div>
       {/* <TodoList
               searchedNotes = {searchedNotes}            
               seachText = {searchValue}
@@ -85,42 +95,29 @@ function App() {
           />
         )}
       </div>
-
     </div>
-    
   );
 }
 
 export default App;
 
-
-
-
-
-
-
-
-
-
-
-
 // <div className="app">
 
-    //   <NoteList 
-    //   notes={notes}
-    //   onNoteSelect={NoteSelect} 
-    //   onDeleteNote={DeleteNote} />
+//   <NoteList
+//   notes={notes}
+//   onNoteSelect={NoteSelect}
+//   onDeleteNote={DeleteNote} />
 
-    //   {selectedNoteIndex !== null && (
-    //     <NoteViewer
-    //       note={notes[selectedNoteIndex]}
-    //       editingNote={editingNote}
-    //       onSaveNote={SaveNote}
-    //     />
-    //   )}
+//   {selectedNoteIndex !== null && (
+//     <NoteViewer
+//       note={notes[selectedNoteIndex]}
+//       editingNote={editingNote}
+//       onSaveNote={SaveNote}
+//     />
+//   )}
 
-    //   <CreateNoteButton setOpenNoteModal={setOpenNoteModal} />
-    //   {openModal && (
-    //     <AddNotes onAddNote={AddNote} />
-    //   )}
-    // </div>
+//   <CreateNoteButton setOpenNoteModal={setOpenNoteModal} />
+//   {openModal && (
+//     <AddNotes onAddNote={AddNote} />
+//   )}
+// </div>

@@ -14,6 +14,8 @@ function Category({ categories, onSelectCategory, onShowForm }) {
   };
   const username = "solis";
   return (
+    
+    
     <div className="category ">
       <div className='container mt-3 ms-3'>
         <div className='accordion-item'>

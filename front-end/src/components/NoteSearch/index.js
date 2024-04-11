@@ -10,6 +10,7 @@ function Notesearch({searchValue,setSearchValue}) {
         setSearchValue(event.target.value);
       }}
     />
+    
   );
 }
 
