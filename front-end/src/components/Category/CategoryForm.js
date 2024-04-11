@@ -1,7 +1,7 @@
 import React from "react";
 import {Modal, Button } from 'react-bootstrap';
-import { useState } from 'react';
-function CategoryForm({ onAddCategory, onShowForm }) {
+
+function CategoryForm({ onAddCategory, onShowModalCategory }) {
 
   const [categoryName, setCategoryName] = React.useState("");
 
@@ -13,15 +13,15 @@ function CategoryForm({ onAddCategory, onShowForm }) {
     event.preventDefault();
     onAddCategory(categoryName);
     setCategoryName("");
-    onShowForm(false);
+    onShowModalCategory(false);
   };
 
-  const handleClose = () => onShowForm(false);
+  const handleClose = () => onShowModalCategory(false);
 
   return (
     <>
       <Modal
-        show={onShowForm}
+        show={onShowModalCategory}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -32,12 +32,13 @@ function CategoryForm({ onAddCategory, onShowForm }) {
         <Modal.Body>
         <input
           type="text"
+          required
           className="form-control"
           id="categoryName"
           value={categoryName}
           onChange={handleChange}
           placeholder="Nombre de la Categoria"
-          required
+          
         />
         </Modal.Body>
         <Modal.Footer>

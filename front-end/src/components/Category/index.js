@@ -2,9 +2,9 @@ import React from 'react';
 import './Category.css';
 import { CategoryForm } from './CategoryForm';
 import { Button } from 'bootstrap';
-function Category({ categories, onSelectCategory, onShowForm }) {
+function Category({ categories, onSelectCategory, onShowModalCategory }) {
   const handleToggleForm = () => {
-    onShowForm(state => !state);
+    onShowModalCategory(state => !state);
   };
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -50,6 +50,7 @@ function Category({ categories, onSelectCategory, onShowForm }) {
           {categories.map((category, index) => (
             <li key={index} onClick={() => onSelectCategory(index)}>
               {category.name}
+              
               <span className="badge bg-primary rounded-pill">2</span>
             </li>
           ))}
@@ -57,6 +58,7 @@ function Category({ categories, onSelectCategory, onShowForm }) {
       </div>
     </div>
   );
+  
 }
 
 export { Category };

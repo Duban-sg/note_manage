@@ -43,8 +43,6 @@ function AddNotes  ({ onAddNote }) {
         ></textarea>
 
         <button type="submit" className='button-add'>Agregar Nota</button>
-
-
       </form>
     </div>
   );

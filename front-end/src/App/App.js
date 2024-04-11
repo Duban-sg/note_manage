@@ -10,6 +10,7 @@ import { CategoryForm } from "../components/Category/CategoryForm";
 import { useCategory } from "./useCategory";
 import { Notesearch } from "../components/NoteSearch";
 import { TodoList } from "../components/TodoList";
+import { NewNote } from "../components/NoteList/NewNote";
 function App() {
   const {
     AddNote,
@@ -27,8 +28,8 @@ function App() {
   const {
     categories,
     setCategories,
-    showForm,
-    setShowForm,
+    showModalNote,
+    setShowModalNote,
     handleAddCategory,
     selectedCategory,
     handleSelectCategory,
@@ -37,21 +38,30 @@ function App() {
     searchValue,
     setSearchValue,
     searchedNotes,
+    showModalCategory,
+    setShowModalCategory,
+    handleDeleteNote,
   } = useCategory();
-
+ 
+  const handleToggleForm = () => {
+    setShowModalNote(true);
+  };
   return (
     <div className="app">
       <Category
         categories={categories}
         onSelectCategory={handleSelectCategory}
-        onShowForm={setShowForm}
+        onShowModalCategory={setShowModalCategory}
       />
 
       <div className="note-list">
         <div className="row">
           <h3>
             DevOps
-            <span className="badge bg-primary rounded-pill" onClick={AddNote}>
+            <span
+              className="badge bg-primary rounded-pill"
+              onClick={handleToggleForm}
+            >
               +
             </span>
             {/* Botón para mostrar u ocultar el formulario */}
@@ -59,7 +69,22 @@ function App() {
           <h6>N Notas</h6>
         </div>
 
-        {showForm && <CategoryForm onAddCategory={handleAddCategory} onShowForm={setShowForm} />}
+        {showModalCategory && (
+          <CategoryForm
+            onAddCategory={handleAddCategory}
+            onShowModalCategory={setShowModalCategory}
+          />
+        )}
+        {showModalNote && (
+          <NewNote
+            onAddNote={handleAddCategory}
+            onShowModalNote={setShowModalNote}
+            categoryId={selectedCategory}
+            categories={categories}
+            setCategories ={setCategories}
+          />
+        )}
+
         <Notesearch searchValue={searchValue} setSearchValue={setSearchValue} />
 
         <ul>
@@ -70,9 +95,11 @@ function App() {
                   key={index}
                   list={category.lists}
                   onNoteSelect={handleSelectNote}
-                  onDeleteNote={DeleteNote}
                   searchedNotes={searchedNotes}
                   seachText={searchValue}
+                  categoryId={selectedCategory}
+                  handleDeleteNote={handleDeleteNote}
+                  
                 />
               )
           )}

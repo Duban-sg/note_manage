@@ -52,10 +52,9 @@ label {
     margin-top: 10px;
 }
 
-textarea {
+/* textarea {
     background-color: #F9FBFC;
     border: 2px solid #202329;
-    /* border-radius: 2px; */
     box-shadow: 0px 5px 50px rgba(32, 35, 41, 0.25);
     color: #1E1E1F;
     font-size: 20px;
@@ -64,15 +63,15 @@ textarea {
     height: 96px;
     width: calc(100% - 25px);
     margin-top: 10px;
-}
+} */
 
-textarea::placeholder {
+/* textarea::placeholder {
     color: #A5A5A5;
     font-family: 'Montserrat';
     font-weight: 400;
-}
+} */
 
-input {
+/* input {
     padding: 8px;
     border-radius: 4px;
     font-size: 16px;
@@ -85,4 +84,4 @@ input::placeholder {
     color: #A5A5A5;
     font-family: 'Montserrat';
     font-weight: 400;
-}
+} */
