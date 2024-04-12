@@ -1,7 +1,6 @@
 import React from "react";
 import './noteViewer.css';
 import { putNote } from "../../services/notesServices";
-
 function NoteViewer({ note, onSaveNote }) {
     const [editing, setEditing] = React.useState(false);
     const [editedNote, setEditedNote] = React.useState({ ...note });
@@ -21,6 +20,7 @@ function NoteViewer({ note, onSaveNote }) {
 
     const handleSave = async () => {
         try {
+            // Esperar a que la promesa se resuelva para obtener la respuesta real de la solicitud PUT
             const response = await putNote(editedNote);
             
             onSaveNote(editedNote);
@@ -39,21 +39,21 @@ function NoteViewer({ note, onSaveNote }) {
                     <>
                         <input
                             type="text"
-                            name="content"
-                            value={editedNote?.content}
+                            name="title"
+                            value={editedNote.title}
                             onChange={handleInputChange}
                         />
                         <textarea
                             name="content"
-                            value={editedNote?.content}
+                            value={editedNote.content}
                             onChange={handleInputChange}
                         ></textarea>
                         <button onClick={handleSave}>Guardar</button>
                     </>
                 ) : (
                     <>
-                        <h2 onClick={handleEdit}>{note?.name}</h2>
-                        <p onClick={handleEdit}>{note?.content}</p>
+                        <h2 onClick={handleEdit}>{note.title}</h2>
+                        <p onClick={handleEdit}>{note.content}</p>
                     </>
                 )}
             </div>

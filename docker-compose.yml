@@ -20,7 +20,7 @@ services:
     build: 
       context: ./front-end/
       args:
-        - REACT_APP_URL_API_SERVER=http://localhost:8080/
+        - REACT_APP_URL_API_SERVER=http://localhost:8085/Backend/
         - REACT_APP_API_KEY=asdasdadasd   
     ports:
       - "3001:80"
@@ -98,6 +98,14 @@ services:
       - zookeeper
     networks:
       - public
+
+  apigateway:
+    build: ./ApiGateway/ApiGateway.Api/
+    ports:
+      - "8085:80"
+    networks:
+      - public
+    hostname: apiGateway
 
 networks:
   public:

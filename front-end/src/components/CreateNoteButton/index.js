@@ -1,12 +1,12 @@
 import './CreateNoteButton.css'
-function CreateNoteButton({ setOpenNoteModal }) {
+function CreateNoteButton({ setShowAddNoteModal }) {
 
     return (
         <button
             className='CreateNoteButton'
             onClick={
                 () => {
-                    setOpenNoteModal(state => !state);
+                    setShowAddNoteModal(state => !state);
                 }
 
             }>+</button>
