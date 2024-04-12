@@ -1,0 +1,15 @@
+.accordionHeaderItems{
+    display: grid;
+    grid-template-columns: 0.5fr 2fr;
+    max-height: max-content;
+    gap: 10px;
+    text-align: center;
+}
+img{
+    
+    max-width: 50px;
+    max-height: 50px;
+}
+
+
+
