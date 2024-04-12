@@ -1,29 +1,21 @@
-import React from "react";
-import "../App.css";
+import React, { useEffect, useState } from "react";
+import "../styles/App.css";
 import { Category } from "../components/Category";
 import { NoteList } from "../components/NoteList";
 import { NoteViewer } from "../components/NoteViewer";
-import { AddNotes } from "../components/AddNote";
-import { CreateNoteButton } from "../components/CreateNoteButton";
-import { useNotes } from "./useNotes";
 import { CategoryForm } from "../components/Category/CategoryForm";
 import { useCategory } from "./useCategory";
 import { Notesearch } from "../components/NoteSearch";
-import { TodoList } from "../components/TodoList";
 import { NewNote } from "../components/NoteList/NewNote";
+import { MenuCollapse } from "../components/MenuCollapse";
+import { useSelector } from "react-redux"
+import Collapse from 'react-bootstrap/Collapse';
+
+
 function App() {
-  const {
-    AddNote,
-    SaveNote,
-    DeleteNote,
-    notes,
-    setOpenNoteModal,
-    openModal,
-    NoteSelect,
-    editingNote,
-    selectedNoteIndex,
-    SetselectedNoteIndex,
-  } = useNotes();
+
+  const isOpen = useSelector((state) => state.menuCollapseState.value);
+
 
   const {
     categories,
@@ -42,12 +34,30 @@ function App() {
     setShowModalCategory,
     handleDeleteNote,
   } = useCategory();
- 
+
   const handleToggleForm = () => {
     setShowModalNote(true);
   };
   return (
-    <div className="app">
+    <div className={isOpen ? "app" : "close"}>
+
+      {/* No eliminar esta seccion, es la mejora visual */}
+      {/* <Collapse in={isOpen} dimension="width">
+        <div id="example-collapse-text" style={{ minHeight: "fit-content" }}>
+          <MenuCollapse />
+        </div>
+      </Collapse>
+      <div style={{ display: isOpen ? "none" : "block" }}>
+
+      </div>
+
+      <div>sdsd</div>
+      <NoteViewer
+        key={{}.id}
+        note={{}}
+      /> */}
+
+
       <Category
         categories={categories}
         onSelectCategory={handleSelectCategory}
@@ -64,9 +74,8 @@ function App() {
             >
               +
             </span>
-            {/* Botón para mostrar u ocultar el formulario */}
           </h3>
-          <h6>N Notas</h6>
+          <h6>Notas</h6>
         </div>
 
         {showModalCategory && (
@@ -105,20 +114,12 @@ function App() {
           )}
         </ul>
       </div>
-      {/* <TodoList
-              searchedNotes = {searchedNotes}            
-              seachText = {searchValue}
-            >
-                
-        
-      </TodoList> */}
 
       <div>
         {selectedNote != null && (
           <NoteViewer
             key={selectedNote.id}
             note={selectedNote}
-            onSaveNote={SaveNote}
           />
         )}
       </div>
@@ -128,23 +129,3 @@ function App() {
 
 export default App;
 
-// <div className="app">
-
-//   <NoteList
-//   notes={notes}
-//   onNoteSelect={NoteSelect}
-//   onDeleteNote={DeleteNote} />
-
-//   {selectedNoteIndex !== null && (
-//     <NoteViewer
-//       note={notes[selectedNoteIndex]}
-//       editingNote={editingNote}
-//       onSaveNote={SaveNote}
-//     />
-//   )}
-
-//   <CreateNoteButton setOpenNoteModal={setOpenNoteModal} />
-//   {openModal && (
-//     <AddNotes onAddNote={AddNote} />
-//   )}
-// </div>

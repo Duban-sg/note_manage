@@ -40,20 +40,20 @@ function NoteViewer({ note, onSaveNote }) {
                         <input
                             type="text"
                             name="content"
-                            value={editedNote.content}
+                            value={editedNote?.content}
                             onChange={handleInputChange}
                         />
                         <textarea
                             name="content"
-                            value={editedNote.content}
+                            value={editedNote?.content}
                             onChange={handleInputChange}
                         ></textarea>
                         <button onClick={handleSave}>Guardar</button>
                     </>
                 ) : (
                     <>
-                        <h2 onClick={handleEdit}>{note.name}</h2>
-                        <p onClick={handleEdit}>{note.content}</p>
+                        <h2 onClick={handleEdit}>{note?.name}</h2>
+                        <p onClick={handleEdit}>{note?.content}</p>
                     </>
                 )}
             </div>

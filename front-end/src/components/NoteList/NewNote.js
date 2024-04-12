@@ -15,8 +15,9 @@ const [name, setName] = useState('');
       content: content
     };
 
-    const updatedCategories = categories.map(category => {
-      if (category.id === categoryId) {
+    const updatedCategories = categories.map((category,index) => {
+      if (index === categoryId) {
+        debugger
         return {
           ...category,
           lists: [...category.lists, newNote]
@@ -24,7 +25,6 @@ const [name, setName] = useState('');
       }
       return category;
     });
-
     setCategories(updatedCategories);
 
     setName('');

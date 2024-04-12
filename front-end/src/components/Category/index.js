@@ -2,6 +2,8 @@ import React from 'react';
 import './Category.css';
 import { CategoryForm } from './CategoryForm';
 import { Button } from 'bootstrap';
+
+
 function Category({ categories, onSelectCategory, onShowModalCategory }) {
   const handleToggleForm = () => {
     onShowModalCategory(state => !state);
