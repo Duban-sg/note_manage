@@ -39,7 +39,7 @@ class mongo_db:
         db = self.database[self.nameDatabase]
         collection = db[self.nameCollection] 
         if (filter != None ):
-            allDocuments = collection.find({},filter)
+            allDocuments = collection.find(filter)
         else: 
             allDocuments = collection.find()
         allDocuments = list(map(lambda x: self.convertIdMongoInObjectToStr(x), allDocuments))
@@ -48,9 +48,9 @@ class mongo_db:
     def getOneDocumentInCollection(self,id):
         db = self.database[self.nameDatabase]
         collection = db[self.nameCollection]
-        note = collection.find_one({"_id": ObjectId(id)})
-        note = self.convertIdMongoInObjectToStr(note)
-        return note 
+        response = collection.find_one({"_id": ObjectId(id)})
+        response = self.convertIdMongoInObjectToStr(response)
+        return response 
         
     
     def updateDocumentByIdInCollecction(self,id,document):
@@ -67,6 +67,44 @@ class mongo_db:
         else:
             return False
         
+    def updateDocumentByFilterInCollecction(self,filter,objectWithInfoToUpdate):
+        db = self.database[self.nameDatabase]
+        collection = db[self.nameCollection] 
+        response = collection.update_one(filter,{
+            '$set': {**objectWithInfoToUpdate}
+        })
+        if response.modified_count > 0 :
+            return True
+        else:
+            return False
+    
+    def insertObjectInDocumentByidInColeccion(self,id,object):
+        db = self.database[self.nameDatabase]
+        collection = db[self.nameCollection] 
+        response = collection.update_one({ 
+            '_id' : ObjectId(id)
+        },{ 
+           '$push': {"notes": {**object,'_id':ObjectId()}}}
+        )
+        if response.modified_count > 0 :
+            return True
+        else:
+            return False
+    
+    def removeObjectInDocumentByidInColeccion(self,idcategoria, idNotes):
+        db = self.database[self.nameDatabase]
+        collection = db[self.nameCollection] 
+        response = collection.update_one({ 
+            '_id' : ObjectId(idcategoria)
+        },{ 
+           '$pull': {"notes": {'_id':ObjectId(idNotes)}}}
+        )
+        if response.modified_count > 0 :
+            return True
+        else:
+            return False
+    
+        
     def deleteDocumentByIdInCollecction(self,id):
         db = self.database[self.nameDatabase]
         collection = db[self.nameCollection] 
@@ -82,7 +120,17 @@ class mongo_db:
         
 
     def convertIdMongoInObjectToStr(self,item):
-        item['_id'] = str(item['_id'])
+        print(item)
+        for key in item.keys():
+            if key == '_id':
+                item[key] = str(item[key])
+            if isinstance(item[key], list):
+                print(item[key])
+                arreglo = []
+                for subItem in item[key]:
+                    arreglo.append(self.convertIdMongoInObjectToStr(subItem))
+                item[key] = arreglo
+                
         return item
 
         

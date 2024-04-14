@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from typing import Union
-from Note import Note
 
 
-class CategoriasIn(BaseModel):
+class CategoriaIn(BaseModel):
     name : Union[str, None] = None
+    autor: Union[str, None] = None
+
 
 
 

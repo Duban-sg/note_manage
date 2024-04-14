@@ -8,6 +8,7 @@ class Note(BaseModel):
     title: Union[str, None] = None
     content: Union[str, None] = None
     fecha_modificacion : Union[str, None] = None
+    autor: Union[str, None] = None
 
     # def __init__(self,title:Union[str, None]= None, content:Union[str, None]=None ) -> None:
     #     self.id = uuid1()

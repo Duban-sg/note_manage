@@ -2,13 +2,13 @@ version:  "3.7"
 
 services:
   microservice:
-    build: ./back-end/
+    build: ./
     ports:
       - "8920:80"
     environment:
       - password_data_base=4eLNFkI9TFCLgYzP
       - user_data_base=dubancsierra
-      - server_ip_data_base=mongodb
+      - server_ip_data_base=note_mongodb
       - appname_data_base=test
       - server_port_data_base=27017
     networks:
@@ -16,21 +16,11 @@ services:
     depends_on:
       - mongo
     hostname: back_end_notes
-  frontend:
-    build: 
-      context: ./front-end/
-      args:
-        - REACT_APP_URL_API_SERVER=http://localhost:8085/Backend/
-        - REACT_APP_API_KEY=asdasdadasd   
-    ports:
-      - "3001:80"
-    networks:
-      - public
-    depends_on:
-      - microservice
+    volumes:
+      - ./src/:/services/apis/back_end_notes/src
   mongo:
     image: mongo
-    container_name: mongodb
+    container_name: note_mongodb
     environment:
       - MONGO_INITDB_ROOT_USERNAME=dubancsierra
       - MONGO_INITDB_ROOT_PASSWORD=4eLNFkI9TFCLgYzP
@@ -41,74 +31,6 @@ services:
       - public
     ports:
       - 27017:27017
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_SERVER_ID: 1
-    ports:
-      - "2181:2181"
-    networks:
-      - public
-
-  kafka-1:
-    image: confluentinc/cp-kafka:latest
-    ports:
-      - "9092:9092"
-      - "29092:29092"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-1:19092,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092,DOCKER://host.docker.internal:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_BROKER_ID: 1
-    depends_on:
-      - zookeeper
-    networks:
-      - public
-
-  kafka-2:
-    image: confluentinc/cp-kafka:latest
-    ports:
-      - "9093:9093"
-      - "29093:29093"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-2:19093,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9093,DOCKER://host.docker.internal:29093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_BROKER_ID: 2
-    depends_on:
-      - zookeeper
-    networks:
-      - public
-
-  kafka-3:
-    image: confluentinc/cp-kafka:latest
-    ports:
-      - "9094:9094"
-      - "29094:29094"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-3:19094,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9094,DOCKER://host.docker.internal:29094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_BROKER_ID: 3
-    depends_on:
-      - zookeeper
-    networks:
-      - public
-
-  apigateway:
-    build: ../ApiGateway/ApiGateway.Api/
-    ports:
-      - "8085:80"
-    networks:
-      - public
-    hostname: apiGateway
-    volumes:
-      - ../ApiGateway/ApiGateway.Api/appsettings.json:/src/ApiGateway.Api/appsettings.json
-
 networks:
   public:
 
