@@ -65,3 +65,10 @@ def delete_note(idnote: str):
         return id
     else :
         raise HTTPException(status_code=404, detail = "Note not found")
+    
+@app.post("/categorias/")
+async def saveNotes( noteIn:CategoriasIn.CategoriasIn):
+    note = Note.Note(**noteIn.dict(), fecha_creacion = str(date.today()))
+    resutl = basededatos.insertInColeccition(note.dict())
+    response = {**note.dict(), '_id':str(resutl.inserted_id)}
+    return response
