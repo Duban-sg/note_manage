@@ -2,3 +2,5 @@ fastapi>=0.68.0,<0.69.0
 pydantic>=1.8.0,<2.0.0
 uvicorn>=0.15.0,<0.16.0
 pymongo[srv]>=3.6
+kafka-python>=2.0.2 
+docker>=5.0.3 

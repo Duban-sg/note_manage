@@ -21,6 +21,7 @@ class mongo_db:
         self.port = get_var("server_port_data_base")
         self.appname = get_var("appname_data_base")
         self.stringConecction = "mongodb://"+self.usuario+":"+self.password+"@"+self.server+":"+self.port +"/"+self.appname+"?directConnection=true&authSource=admin&appName=mongosh+2.1.5"
+        #self.stringConecction = "mongodb://dubancsierra:4eLNFkI9TFCLgYzP@localhost:27017/test?directConnection=true&authSource=admin&appName=mongosh+2.1.5"
         self.database = MongoClient (self.stringConecction)
 
     def setNameCollection(self,nameCollection):

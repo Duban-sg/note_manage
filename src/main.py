@@ -10,6 +10,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from bson import ObjectId
 from src.core.utils import getParamsToUpdate
+from src.notification.notificarDecorator import notificar
 
 
 app = FastAPI()
@@ -36,6 +37,7 @@ basededatos.setNameCollection('categories')
 
 
 @app.post("/notas/{categoryId}")
+@notificar(nombreModulo="/notas/{categoryId}")
 async def saveNotes( categoryId:str,noteIn:NoteIn.NoteIn):
     try:
         responseCDb = basededatos.getOneDocumentInCollection(categoryId)
@@ -56,6 +58,7 @@ async def saveNotes( categoryId:str,noteIn:NoteIn.NoteIn):
 
 
 @app.put("/notas/{idcategoria}/{idnote}")
+@notificar(nombreModulo="/notas/{idcategoria}/{idnote}")
 def updateNotes(idcategoria:str,idnote: str,noteIn:NoteIn.NoteIn) :
     noteIn = jsonable_encoder(noteIn)
     resutl = basededatos.updateDocumentByFilterInCollecction(
@@ -68,6 +71,7 @@ def updateNotes(idcategoria:str,idnote: str,noteIn:NoteIn.NoteIn) :
         raise HTTPException(status_code=404, detail="Note Not found")
 
 @app.delete("/notas/{idcategoria}/{idnote}")
+@notificar(nombreModulo="/notas/{idcategoria}/{idnote}")
 def delete_note(idcategoria: str,idnote: str): 
     result = basededatos.removeObjectInDocumentByidInColeccion(idcategoria,idnote)
     if result :
@@ -75,13 +79,15 @@ def delete_note(idcategoria: str,idnote: str):
         return responseCDb
     else :
         raise HTTPException(status_code=404, detail = "Note not found")
-
+    
 @app.get("/categorias/")
+@notificar(nombreModulo="/categorias/")
 def getCategorias() :
     resutl = basededatos.getAllDocumentInCollection()
     return resutl
 
 @app.get("/categorias/{idAutor}")
+@notificar(nombreModulo="/categorias/{idAutor}")
 def getCategoriasByAutor(idAutor:str) :
 
     resutl = basededatos.getAllDocumentInCollection({"autor": idAutor})
@@ -89,6 +95,7 @@ def getCategoriasByAutor(idAutor:str) :
 
     
 @app.patch("/categorias/{idcategoria}")
+@notificar(nombreModulo="/categorias/{idcategoria}")
 def updateNotes(idcategoria: str, newName: str ) :
     resutl = basededatos.updateDocumentByFilterInCollecction(
         {"_id":ObjectId(idcategoria)},
