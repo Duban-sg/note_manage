@@ -1,20 +1,22 @@
-from fastapi import FastAPI
-from kafka import KafkaProducer, KafkaConsumer
-import json
+import pymysql
+import sys
+import boto3
+import os
 
-app = FastAPI()
+ENDPOINT="nota.clcw0amuu9zc.us-west-2.rds.amazonaws.com"
+PORT="3306"
+USER="admin"
+REGION="us-west-2a"
+DBNAME="notas"
+os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 
-# Configura el productor de Kafka
-producer = KafkaProducer(bootstrap_servers='service_nginx:9095',
-                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+token = "Maxnireyojhonan123*"
 
-
-
-@app.post("/enviar_mensaje/")
-async def enviar_mensaje(mensaje: dict):
-    producer.send('TRAZA', value=mensaje)
-    return {"mensaje": "Enviado correctamente"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=80)
+try:
+    conn =  pymysql.connect(host=ENDPOINT, user=USER, passwd=token, port=PORT, database=DBNAME, ssl_ca='rds-ca-rsa2048-g1')
+    cur = conn.cursor()
+    cur.execute("""SELECT now()""")
+    query_results = cur.fetchall()
+    print(query_results)
+except Exception as e:
+    print("Database connection failed due to {}".format(e))          

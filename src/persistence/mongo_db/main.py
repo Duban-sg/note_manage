@@ -121,12 +121,10 @@ class mongo_db:
         
 
     def convertIdMongoInObjectToStr(self,item):
-        print(item)
         for key in item.keys():
             if key == '_id':
                 item[key] = str(item[key])
             if isinstance(item[key], list):
-                print(item[key])
                 arreglo = []
                 for subItem in item[key]:
                     arreglo.append(self.convertIdMongoInObjectToStr(subItem))

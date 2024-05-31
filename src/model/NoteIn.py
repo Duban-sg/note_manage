@@ -1,5 +1,5 @@
 from uuid import uuid1
-from pydantic import BaseModel
+from pydantic import BaseModel, Extra
 from typing import Union
 from datetime import date
 
@@ -8,6 +8,7 @@ class NoteIn(BaseModel):
     content: Union[str, None] = None
     autor: Union[str, None] = None
 
-
+    class Config:
+        extra = Extra.allow
 
 

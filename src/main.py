@@ -8,6 +8,7 @@ from pydantic import json
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
+from src.core.config import get_var
 from bson import ObjectId
 from src.core.utils import getParamsToUpdate
 from src.notification.notificarDecorator import notificar
@@ -15,10 +16,7 @@ from src.notification.notificarDecorator import notificar
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,6 +32,9 @@ basededatos = mongo_db.mongo_db()
 basededatos.setNameDatabase('note_manage')
 basededatos.setNameCollection('categories')
 
+@app.get("/health/")
+async def saveNotes():
+    return get_var("my_ip")
 
 
 @app.post("/notas/{categoryId}")
@@ -43,9 +44,7 @@ async def saveNotes( categoryId:str,noteIn:NoteIn.NoteIn):
         responseCDb = basededatos.getOneDocumentInCollection(categoryId)
         if responseCDb:
             note = Note.Note(**noteIn.dict(), fecha_creacion = str(date.today()))
-            print(note)
             resutl = basededatos.insertObjectInDocumentByidInColeccion(categoryId,note.dict())
-            print(resutl)
             if resutl:
                 responseCDb = basededatos.getOneDocumentInCollection(categoryId)
                 return responseCDb
@@ -63,7 +62,7 @@ def updateNotes(idcategoria:str,idnote: str,noteIn:NoteIn.NoteIn) :
     noteIn = jsonable_encoder(noteIn)
     resutl = basededatos.updateDocumentByFilterInCollecction(
         {"_id":ObjectId(idcategoria),"notes._id":ObjectId(idnote)},
-        getParamsToUpdate("notes.$.",noteIn))
+        {**getParamsToUpdate("notes.$.",noteIn), "notes.$.fecha_modificacion":str(date.today()) })
     if resutl :
         Note = basededatos.getOneDocumentInCollection(idcategoria)
         return Note

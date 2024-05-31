@@ -23,7 +23,7 @@ class ServicioNotificacion():
         def send_mensaje():
             try:
                 self.producer = KafkaProducer(bootstrap_servers=self.server, 
-                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+                          value_serializer=lambda v: json.dumps(v).encode('utf-8'))
                 self.producer.send(topic='TRAZA', value=objectMensaje.dict())
                 print("[info]: Se envio el mensjae con exito")
             except:
